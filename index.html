@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO Meta Tags -->
+  <!-- SEO Meta Tags (i18n.js swaps title/description per language) -->
   <title>とばり｜寝る前・作業前に。頭を休める音。</title>
   <meta name="description" content="夜、伏せて置くと、音が満ちる。寝る前・作業前に、今の状況に合う音へ頭を逃がす。広告なし。まず無料で試せます（全解放は¥1,200の一度払い）。まず30秒、聴いてみてください。">
   <meta name="keywords" content="環境音,アンビエント,作業用BGM,静かな音,買切,広告なし,買い切りアプリ">
@@ -17,6 +17,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="とばり / Tobari">
   <meta property="og:locale" content="ja_JP">
+  <meta property="og:locale:alternate" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -36,12 +37,25 @@
 
   <!-- External CSS -->
 
+  <!-- Early language decision (avoids flash): sets <html lang> before paint. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('tobari_lp_lang');
+        var nav = (navigator.language || 'ja').toLowerCase();
+        var lang = saved || (nav.indexOf('ja') === 0 ? 'ja' : 'en');
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "とばり",
+    "name": "とばり / Tobari",
     "description": "寝る前・作業前に。今の状況に合う音へ頭を逃がす、買切の音アプリ。",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "iOS 15.0",
@@ -54,18 +68,25 @@
     }
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-DubQcq5m.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-QO8D76wU.css">
+  <script type="module" crossorigin src="./assets/index-D0XoFQkC.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-z-LKofkL.css">
 </head>
 <body>
+  <!-- Language toggle (follow-system default, persists choice) -->
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button type="button" class="lang-btn" data-lang-set="ja">日本語</button>
+    <span class="lang-sep" aria-hidden="true">/</span>
+    <button type="button" class="lang-btn" data-lang-set="en">EN</button>
+  </div>
+
   <!-- Hero / First View -->
   <section class="hero" id="hero">
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-content">
-      <p class="hero-kicker"><img src="./tobari-wordmark.png" alt="とばり" class="hero-wordmark"></p>
-      <h1 class="hero-title">寝る前・作業前に。<br>頭を休める音。</h1>
-      <p class="hero-subtitle"><span class="hero-gesture">夜、伏せて置くと、音が満ちる。</span><br>頭が騒ぐ、その間だけ。今の状況に合う音へ、そっと逃がす。<br><span class="hero-note">広告なし・買切。急かす仕組みもありません。</span></p>
-      <a href="#listen" class="cta-button">まず、30秒だけ聴く</a>
+      <p class="hero-kicker"><img src="./tobari-wordmark.png" alt="とばり / Tobari" class="hero-wordmark"></p>
+      <h1 class="hero-title" data-i18n="hero_title">寝る前・作業前に。<br>頭を休める音。</h1>
+      <p class="hero-subtitle" data-i18n="hero_sub"><span class="hero-gesture">夜、伏せて置くと、音が満ちる。</span><br>頭が騒ぐ、その間だけ。今の状況に合う音へ、そっと逃がす。<br><span class="hero-note">広告なし・買切。急かす仕組みもありません。</span></p>
+      <a href="#listen" class="cta-button" data-i18n="hero_cta">まず、30秒だけ聴く</a>
     </div>
     <div class="hero-scroll" aria-hidden="true">⌄</div>
   </section>
@@ -73,8 +94,8 @@
   <!-- Listen / Preview Player -->
   <section class="listen section" id="listen">
     <div class="container narrow">
-      <h2 class="section-title">聴いてから、決めてください。</h2>
-      <p class="section-lead">「灯火の前にて」— 作業に入る前、机に向かう時間に。<br>まずは、この1本を30秒。</p>
+      <h2 class="section-title" data-i18n="listen_title">聴いてから、決めてください。</h2>
+      <p class="section-lead" data-i18n="listen_lead">「灯火の前にて」— 作業に入る前、机に向かう時間に。<br>まずは、この1本を30秒。</p>
 
       <div class="player" id="player">
         <button class="player-btn" id="playBtn" aria-label="試聴を再生">
@@ -85,13 +106,13 @@
           <div class="player-bar" id="playerBar">
             <div class="player-bar-fill" id="playerFill"></div>
           </div>
-          <div class="player-time"><span id="playerCur">0:00</span><span class="player-hint">ヘッドホン推奨・音量はやさしめに</span></div>
+          <div class="player-time"><span id="playerCur">0:00</span><span class="player-hint" data-i18n="player_hint">ヘッドホン推奨・音量はやさしめに</span></div>
         </div>
       </div>
 
       <!-- Revealed after preview fades out -->
       <div class="after-listen" id="afterListen" hidden>
-        <a href="#buy" class="cta-button cta-amber">続きは、アプリで（無料ダウンロード）</a>
+        <a href="#buy" class="cta-button cta-amber" data-i18n="after_cta">続きは、アプリで（無料ダウンロード）</a>
       </div>
 
       <audio id="previewAudio" src="./preview-shimekiri.m4a" preload="none"></audio>
@@ -101,43 +122,43 @@
   <!-- What it is (即物ペイン / 音の前後) -->
   <section class="traits section" id="traits">
     <div class="container">
-      <h2 class="section-title">音のほかは、<br>何も足さない道具です。</h2>
+      <h2 class="section-title" data-i18n="traits_title">音のほかは、<br>何も足さない道具です。</h2>
       <div class="trait-grid">
         <div class="trait-card reveal">
           <div class="trait-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
-          <h3>広告が出ません</h3>
-          <p>静かに聴きたい時間に、何も割り込みません。買切なので、追加課金もありません。</p>
+          <h3 data-i18n="trait1_h">広告が出ません</h3>
+          <p data-i18n="trait1_p">静かに聴きたい時間に、何も割り込みません。買切なので、追加課金もありません。</p>
         </div>
         <div class="trait-card reveal">
           <div class="trait-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" fill="currentColor"/></svg></div>
-          <h3>通知で急かしません</h3>
-          <p>連続記録も、ストリークもありません。続けさせるための仕掛けを持ちません。</p>
+          <h3 data-i18n="trait2_h">通知で急かしません</h3>
+          <p data-i18n="trait2_p">連続記録も、ストリークもありません。続けさせるための仕掛けを持ちません。</p>
         </div>
         <div class="trait-card reveal">
           <div class="trait-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/></svg></div>
-          <h3>記録しません</h3>
-          <p>あなたが何を聴いたか、どれだけ使ったか。集めません。アカウントも要りません。</p>
+          <h3 data-i18n="trait3_h">記録しません</h3>
+          <p data-i18n="trait3_p">あなたが何を聴いたか、どれだけ使ったか。集めません。アカウントも要りません。</p>
         </div>
         <div class="trait-card reveal">
           <div class="trait-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor"/></svg></div>
-          <h3>画面を閉じても鳴り続けます</h3>
-          <p>枕元で画面を消しても止まらず、選んだ時間で静かに終わります。</p>
+          <h3 data-i18n="trait4_h">画面を閉じても鳴り続けます</h3>
+          <p data-i18n="trait4_p">枕元で画面を消しても止まらず、選んだ時間で静かに終わります。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Track List (収録音一覧) -->
+  <!-- Track List (収録音一覧) — 曲名は常に日本語（世界観のモート、翻訳しない） -->
   <section class="tracks section" id="tracks">
     <div class="container">
-      <h2 class="section-title">状況に合わせて選ぶ。</h2>
+      <h2 class="section-title" data-i18n="tracks_title">状況に合わせて選ぶ。</h2>
       <div class="track-grid">
         <div class="track-card reveal" data-situation="sleep">
           <div class="track-gradient" aria-hidden="true"></div>
           <div class="track-meta">
             <span class="track-no">01</span>
             <h3 class="track-name">夜半の巡り</h3>
-            <p class="track-when">眠る前、明かりをひとつ残して</p>
+            <p class="track-when" data-i18n="track1_when">眠る前、明かりをひとつ残して</p>
           </div>
         </div>
         <div class="track-card reveal" data-situation="calm">
@@ -145,7 +166,7 @@
           <div class="track-meta">
             <span class="track-no">02</span>
             <h3 class="track-name">異郷の帳</h3>
-            <p class="track-when">慣れない宿で、知らない天井の下で</p>
+            <p class="track-when" data-i18n="track2_when">慣れない宿で、知らない天井の下で</p>
           </div>
         </div>
         <div class="track-card reveal" data-situation="focus">
@@ -153,49 +174,49 @@
           <div class="track-meta">
             <span class="track-no">03</span>
             <h3 class="track-name">灯火の前にて</h3>
-            <p class="track-when">作業に入る前、机に向かう時間に</p>
+            <p class="track-when" data-i18n="track3_when">作業に入る前、机に向かう時間に</p>
           </div>
         </div>
       </div>
-      <p class="tracks-note">他にも、渓流などの自然音を収録。<br>音のゆらぎは、お好みで調整できます。</p>
+      <p class="tracks-note" data-i18n="tracks_note">他にも、渓流などの自然音を収録。<br>音のゆらぎは、お好みで調整できます。</p>
     </div>
   </section>
 
   <!-- Smart lighting（任意・音に添える機能） -->
   <section class="lighting section" id="lighting">
     <div class="container">
-      <h2 class="section-title">照明も、いっしょに暮れる。</h2>
-      <p class="lighting-lead">スマホを伏せると、音が満ちる。<br>そのまま、部屋の照明もゆっくり暮れていく。<span class="lighting-optional">対応する照明をお持ちの方への、任意の機能です。</span></p>
+      <h2 class="section-title" data-i18n="light_title">照明も、いっしょに暮れる。</h2>
+      <p class="lighting-lead" data-i18n="light_lead">スマホを伏せると、音が満ちる。<br>そのまま、部屋の照明もゆっくり暮れていく。<span class="lighting-optional">対応する照明をお持ちの方への、任意の機能です。</span></p>
 
       <div class="lighting-steps">
         <div class="lighting-step reveal">
           <span class="lighting-step-no">1</span>
-          <h3>準備する</h3>
-          <p>スマート照明を灯し、iPhone の Wi-Fi と Bluetooth をオンに。</p>
+          <h3 data-i18n="light_s1_h">準備する</h3>
+          <p data-i18n="light_s1_p">スマート照明を灯し、iPhone の Wi-Fi と Bluetooth をオンに。</p>
         </div>
         <div class="lighting-step reveal">
           <span class="lighting-step-no">2</span>
-          <h3>つなぐ</h3>
-          <p>iPhone の「ホーム」アプリで、箱のコードを読み取るだけ。</p>
+          <h3 data-i18n="light_s2_h">つなぐ</h3>
+          <p data-i18n="light_s2_p">iPhone の「ホーム」アプリで、箱のコードを読み取るだけ。</p>
         </div>
         <div class="lighting-step reveal">
           <span class="lighting-step-no">3</span>
-          <h3>えらぶ</h3>
-          <p>とばりで照明と、暮れる速さを選ぶ。設定は、最初の1回だけ。</p>
+          <h3 data-i18n="light_s3_h">えらぶ</h3>
+          <p data-i18n="light_s3_p">とばりで照明と、暮れる速さを選ぶ。設定は、最初の1回だけ。</p>
         </div>
       </div>
 
       <div class="lighting-presets reveal">
-        <p class="lighting-presets-title">暮れる速さは、あなたの夜に合わせて。</p>
+        <p class="lighting-presets-title" data-i18n="light_presets_title">暮れる速さは、あなたの夜に合わせて。</p>
         <div class="lighting-preset-row">
-          <span>ひと息<em>1分</em></span>
-          <span>移ろい<em>15分</em></span>
-          <span>深更<em>30分</em></span>
+          <span data-i18n="light_preset1">ひと息<em>1分</em></span>
+          <span data-i18n="light_preset2">移ろい<em>15分</em></span>
+          <span data-i18n="light_preset3">深更<em>30分</em></span>
         </div>
-        <p class="lighting-endstate">暮れきったら、完全に暗く。あるいは、ともし火を残して。</p>
+        <p class="lighting-endstate" data-i18n="light_endstate">暮れきったら、完全に暗く。あるいは、ともし火を残して。</p>
       </div>
 
-      <p class="lighting-promise reveal">電球の専用アプリは要りません。iPhone の「ホーム」に直接つなぐだけ。<br><span class="lighting-note">照明がなくても、とばりはそのまま使えます。</span><br><span class="lighting-note">※スマート照明との連携は、iOS の対応照明（Apple「ホーム」対応）で任意にご利用いただけます。</span></p>
+      <p class="lighting-promise reveal" data-i18n="light_promise">電球の専用アプリは要りません。iPhone の「ホーム」に直接つなぐだけ。<br><span class="lighting-note">照明がなくても、とばりはそのまま使えます。</span><br><span class="lighting-note">※スマート照明との連携は、iOS の対応照明（Apple「ホーム」対応）で任意にご利用いただけます。</span></p>
     </div>
   </section>
 
@@ -204,15 +225,15 @@
     <div class="container narrow">
       <div class="buy-card">
         <p class="buy-price"><span class="buy-yen">¥</span>1,200</p>
-        <p class="buy-price-label">全解放の、一度払い。月額でも、サブスクでもありません。</p>
+        <p class="buy-price-label" data-i18n="buy_label">全解放の、一度払い。月額でも、サブスクでもありません。</p>
         <ul class="buy-list">
-          <li>まず無料でダウンロードして、試せます</li>
-          <li>全部の音を開くときだけ ¥1,200（一度払い）</li>
-          <li>広告なし・通知なし・記録なし</li>
-          <li>収録音はアップデートで増えていきます</li>
+          <li data-i18n="buy_li1">まず無料でダウンロードして、試せます</li>
+          <li data-i18n="buy_li2">全部の音を開くときだけ ¥1,200（一度払い）</li>
+          <li data-i18n="buy_li3">広告なし・通知なし・記録なし</li>
+          <li data-i18n="buy_li4">収録音はアップデートで増えていきます</li>
         </ul>
-        <a href="https://apps.apple.com/jp/app/id6784166374" class="cta-button cta-amber" target="_blank" rel="noopener">App Store で無料ダウンロード</a>
-        <p class="buy-fine">ダウンロードは無料。iPhone / iPad 対応（iOS 15 以上）。全解放は ¥1,200 の一度払いです。</p>
+        <a href="https://apps.apple.com/jp/app/id6784166374" class="cta-button cta-amber" target="_blank" rel="noopener" data-i18n="buy_cta">App Store で無料ダウンロード</a>
+        <p class="buy-fine" data-i18n="buy_fine">ダウンロードは無料。iPhone / iPad 対応（iOS 15 以上）。全解放は ¥1,200 の一度払いです。</p>
       </div>
     </div>
   </section>
@@ -223,24 +244,24 @@
       <div class="footer-content">
         <div class="footer-section">
           <h3 class="footer-title">とばり / Tobari</h3>
-          <p class="footer-description">寝る前・作業前に。<br>頭を休める音。</p>
+          <p class="footer-description" data-i18n="footer_desc">寝る前・作業前に。<br>頭を休める音。</p>
         </div>
         <div class="footer-section">
-          <h4 class="footer-heading">このアプリについて</h4>
+          <h4 class="footer-heading" data-i18n="footer_about_h">このアプリについて</h4>
           <ul class="footer-links">
-            <li><a href="#listen">試聴する</a></li>
-            <li><a href="#traits">どんな道具か</a></li>
-            <li><a href="#tracks">収録音</a></li>
-            <li><a href="#lighting">照明と暮れる</a></li>
-            <li><a href="#buy">価格</a></li>
+            <li><a href="#listen" data-i18n="footer_l_listen">試聴する</a></li>
+            <li><a href="#traits" data-i18n="footer_l_what">どんな道具か</a></li>
+            <li><a href="#tracks" data-i18n="footer_l_tracks">収録音</a></li>
+            <li><a href="#lighting" data-i18n="footer_l_light">照明と暮れる</a></li>
+            <li><a href="#buy" data-i18n="footer_l_price">価格</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h4 class="footer-heading">法的情報</h4>
+          <h4 class="footer-heading" data-i18n="footer_legal_h">法的情報</h4>
           <ul class="footer-links">
-            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#tokushoho" target="_blank" rel="noopener">特定商取引法に基づく表記</a></li>
-            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#privacy" target="_blank" rel="noopener">プライバシーポリシー</a></li>
-            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#refund" target="_blank" rel="noopener">返金について</a></li>
+            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#tokushoho" target="_blank" rel="noopener" data-i18n="footer_l_tokusho">特定商取引法に基づく表記</a></li>
+            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#privacy" target="_blank" rel="noopener" data-i18n="footer_l_privacy">プライバシーポリシー</a></li>
+            <li><a href="https://dorapocket-lab.github.io/tobari-legal/#refund" target="_blank" rel="noopener" data-i18n="footer_l_refund">返金について</a></li>
           </ul>
         </div>
       </div>
